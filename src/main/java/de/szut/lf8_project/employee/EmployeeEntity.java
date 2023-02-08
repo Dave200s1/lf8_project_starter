@@ -17,7 +17,7 @@ import javax.persistence.*;
 public class EmployeeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long aid;
+    private Long eid;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private ProjectEntity project;

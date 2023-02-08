@@ -16,18 +16,17 @@ public class ProjectEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long pid;
     private String name;
-
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<EmployeeEntity> employees;
-
     private Long clientId;
     private String responsiblePersonByClientName;
     private String projectGoal;
     private LocalDate startDate;
     private LocalDate plannedEndDate;
     private LocalDate actualEndDate;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<EmployeeEntity> employees;
 
     public ProjectEntity(String name) {
         this.name = name;
