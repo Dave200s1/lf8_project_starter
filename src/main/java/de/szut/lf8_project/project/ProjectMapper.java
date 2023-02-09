@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public class ProjectMapper {
 
     public ProjectEntity mapProjectCreateDtoToProject(ProjectCreateDto dto) {
-        var project = new ProjectEntity();
+        ProjectEntity project = new ProjectEntity();
         project.setName(dto.getName());
         project.setClientId(dto.getClientId());
         project.setEmployees(dto.getEmployees());

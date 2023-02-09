@@ -17,6 +17,7 @@ public class ProjectEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pid;
+
     private String name;
     private Long clientId;
     private String responsiblePersonByClientName;
