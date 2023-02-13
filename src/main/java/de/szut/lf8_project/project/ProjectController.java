@@ -17,7 +17,7 @@ public class ProjectController {
         this.mappingService = mappingService;
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<ProjectGetDto> createProject(@Valid @RequestBody final ProjectCreateDto dto){
         ProjectEntity newProject = this.mappingService.mapProjectCreateDtoToProject(dto);
         newProject =  this.service.create(newProject);
@@ -32,7 +32,7 @@ public class ProjectController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/update")
     public ResponseEntity<ProjectGetDto> updateProject(@PathVariable final Long id, @Valid @RequestBody final ProjectCreateDto dto) {
         ProjectEntity updatedProject = this.mappingService.mapProjectCreateDtoToProject(dto);
         updatedProject.setPid(id);
