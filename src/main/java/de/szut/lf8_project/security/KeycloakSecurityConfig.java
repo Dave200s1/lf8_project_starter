@@ -26,11 +26,23 @@ class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
         super.configure(http);
         http.authorizeRequests()
-                .antMatchers("/hello").hasRole("user")
+                .antMatchers("/v1/api/project").hasAnyRole("user", "admin") // all project read
+                .antMatchers("/v1/api/project/add").hasRole("admin") // project add
+                .antMatchers("/v1/api/project/{id}").hasAnyRole("user", "admin") // project read
+                .antMatchers("/v1/api/project/{id}/update").hasRole("admin") // project update
+                .antMatchers("/v1/api/project/{id}/delete").hasRole("admin") // project delete
+
+                .antMatchers("/v1/api/project/{id}/employee").hasAnyRole("user", "admin") // all project employee read
+                .antMatchers("/v1/api/project/{id}/employee/add").hasRole("admin") // employee to project add
+                .antMatchers("/v1/api/project/{id}/employee/{id}/delete").hasRole("admin") // employee from project delete
+
+                .antMatchers("/v1/api/employee/{id}/project").hasAnyRole("user", "admin") // all project by employee read
+
                 .anyRequest()
                 .permitAll();
         http.csrf().disable();
     }
+
 
     @Autowired
     public void configureGlobal(final AuthenticationManagerBuilder auth) {
