@@ -29,7 +29,9 @@ public class ProjectEntity {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<EmployeeEntity> employees;
 
-    public ProjectEntity(String name) {
+    public ProjectEntity(String name, String projectGoal) {
         this.name = name;
+        this.projectGoal = projectGoal;
     }
+
 }
