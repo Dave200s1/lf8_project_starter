@@ -26,17 +26,17 @@ class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
         super.configure(http);
         http.authorizeRequests()
-                .antMatchers("/v1/api/project").hasAnyRole("user", "admin") // all project read
-                .antMatchers("/v1/api/project/add").hasRole("admin") // project add
-                .antMatchers("/v1/api/project/{id}").hasAnyRole("user", "admin") // project read
-                .antMatchers("/v1/api/project/{id}/update").hasRole("admin") // project update
-                .antMatchers("/v1/api/project/{id}/delete").hasRole("admin") // project delete
+                .antMatchers("/project").hasAnyRole("user", "admin") // all project read
+                .antMatchers("/project/add").hasRole("admin") // project add
+                .antMatchers("/project/{id}").hasAnyRole("user", "admin") // project read
+                .antMatchers("/project/{id}/update").hasRole("admin") // project update
+                .antMatchers("/project/{id}/delete").hasRole("admin") // project delete
 
-                .antMatchers("/v1/api/project/{id}/employee").hasAnyRole("user", "admin") // all project employee read
-                .antMatchers("/v1/api/project/{id}/employee/add").hasRole("admin") // employee to project add
-                .antMatchers("/v1/api/project/{id}/employee/{id}/delete").hasRole("admin") // employee from project delete
+                .antMatchers("/project/{id}/employee").hasAnyRole("user", "admin") // all project employee read
+                .antMatchers("/project/{id}/employee/add").hasRole("admin") // employee to project add
+                .antMatchers("/project/{id}/employee/{id}/delete").hasRole("admin") // employee from project delete
 
-                .antMatchers("/v1/api/employee/{id}/project").hasAnyRole("user", "admin") // all project by employee read
+                .antMatchers("/employee/{id}/project").hasAnyRole("user", "admin") // all project by employee read
 
                 .anyRequest()
                 .permitAll();
