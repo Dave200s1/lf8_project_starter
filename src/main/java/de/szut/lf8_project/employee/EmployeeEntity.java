@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,8 +19,17 @@ public class EmployeeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long eid;
-    private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private ProjectEntity project;
+    private String lastname;
+    private String firstname;
+    private String street;
+    private String postcode;
+    private String city;
+    private String phone;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "project_employee",
+            joinColumns = @JoinColumn(name = "eid"),
+            inverseJoinColumns = @JoinColumn(name = "pid"))
+    private Set<ProjectEntity> project;
 }
