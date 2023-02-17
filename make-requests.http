@@ -1,5 +1,5 @@
 ### Add project
-POST http://localhost:8089/project
+POST http://localhost:8089/projects
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
@@ -16,7 +16,7 @@ Authorization: Bearer {{access_token}}
 }
 
 ### Update project
-POST http://localhost:8089/project
+PUT http://localhost:8089/projects/1
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
@@ -38,6 +38,6 @@ Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 ### Get all projects of employee
-GET http://localhost:8089/employee/1/projects
+GET http://localhost:8089/employees/1/projects
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
