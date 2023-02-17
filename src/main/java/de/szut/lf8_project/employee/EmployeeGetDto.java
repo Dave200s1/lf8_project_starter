@@ -5,5 +5,10 @@ import lombok.Data;
 @Data
 public class EmployeeGetDto {
     private Long eid;
-    private String name;
+    private String lastName;
+    private String firstName;
+    private String street;
+    private String postcode;
+    private String city;
+    private String phone;
 }

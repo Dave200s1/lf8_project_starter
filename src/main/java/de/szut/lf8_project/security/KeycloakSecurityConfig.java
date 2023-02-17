@@ -38,7 +38,7 @@ class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
                 .antMatchers("/employee/{id}/project").hasAnyRole("user", "admin") // all project by employee read
 
-                .antMatchers("/swagger-ui/**").permitAll() // permission to swagger project documentation
+                .antMatchers("/swagger/**").permitAll() // permission to swagger project documentation
 
                 .anyRequest()
                 .permitAll();

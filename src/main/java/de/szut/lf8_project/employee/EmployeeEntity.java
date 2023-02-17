@@ -20,8 +20,8 @@ public class EmployeeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long eid;
 
-    private String lastname;
-    private String firstname;
+    private String lastName;
+    private String firstName;
     private String street;
     private String postcode;
     private String city;
