@@ -1,0 +1,43 @@
+### Add project
+POST http://localhost:8089/project
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "name": "Test project",
+  "clientId": 1,
+  "responsiblePersonByClientName": "Test client person",
+  "projectGoal": "Test project goal",
+  "startDate": "2023-03-22",
+  "plannedEndDate": "2023-04-22",
+  "actualEndDate": "",
+  "employees": 1
+}
+
+### Update project
+POST http://localhost:8089/project
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "name": "Updated test project",
+  "clientId": 1,
+  "responsiblePersonByClientName": "Updated test client person",
+  "projectGoal": "Updated test project goal",
+  "startDate": "2023-03-30",
+  "plannedEndDate": "2023-04-30",
+  "actualEndDate": "",
+  "employees": 1
+}
+
+### Get all projects
+GET http://localhost:8089/projects/
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### Get all projects of employee
+GET http://localhost:8089/employee/1/projects
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
