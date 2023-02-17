@@ -28,7 +28,6 @@ public class EmployeeService {
         return optionalQualification.get();
     }
 
-
     public void delete(EmployeeEntity entity) {
         this.repository.delete(entity);
     }

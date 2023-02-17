@@ -26,22 +26,24 @@ class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
         super.configure(http);
         http.authorizeRequests()
-                .antMatchers("/project").hasAnyRole("user", "admin") // all project read
-                .antMatchers("/project/add").hasRole("admin") // project add
-                .antMatchers("/project/{id}").hasAnyRole("user", "admin") // project read
-                .antMatchers("/project/{id}/update").hasRole("admin") // project update
-                .antMatchers("/project/{id}/delete").hasRole("admin") // project delete
+                // all project read (get), project add(post)
+                .antMatchers("/projects").hasAnyRole("user", "admin")
 
-                .antMatchers("/project/{id}/employee").hasAnyRole("user", "admin") // all project employee read
-                .antMatchers("/project/{id}/employee/add").hasRole("admin") // employee to project add
-                .antMatchers("/project/{id}/employee/{id}/delete").hasRole("admin") // employee from project delete
+                // project read (get), update(put), delete(delete)
+                .antMatchers("/projects/{id}").hasAnyRole("user", "admin")
 
-                .antMatchers("/employee/{id}/project").hasAnyRole("user", "admin") // all project by employee read
+                // all project employee read(get), employee to project add(post)
+                .antMatchers("/projects/{id}/employees").hasAnyRole("user", "admin")
 
-                .antMatchers("/swagger/**").permitAll() // permission to swagger project documentation
+                // employee from project delete(delete)
+                .antMatchers("/projects/{id}/employees/{id}").hasRole("admin")
 
-                .anyRequest()
-                .permitAll();
+                // all project by employee read(get)
+                .antMatchers("/employees/{id}/project").hasAnyRole("user", "admin")
+
+                // permission to swagger project documentation
+                .antMatchers("/swagger/**").permitAll();
+
         http.csrf().disable();
     }
 

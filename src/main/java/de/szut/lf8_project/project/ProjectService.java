@@ -1,7 +1,10 @@
 package de.szut.lf8_project.project;
 
+import de.szut.lf8_project.employee.EmployeeEntity;
 import de.szut.lf8_project.exceptionHandling.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -14,6 +17,10 @@ public class ProjectService {
 
     public ProjectEntity create(ProjectEntity newProject) {
         return repository.save(newProject);
+    }
+
+    public List<ProjectEntity> readAll() {
+        return this.repository.findAll();
     }
 
     public ProjectEntity readById(Long id) {
@@ -41,5 +48,14 @@ public class ProjectService {
         updatedProjekt = this.repository.save(updatedProjekt);
         return updatedProjekt;
     }
+
+    public void delete(ProjectEntity project) {
+        Optional<ProjectEntity> optionalQualification = this.repository.findById(project.getPid());
+        if (optionalQualification.isEmpty()) {
+            throw new ResourceNotFoundException("Project not found on id = " + project.getPid());
+        }
+        this.repository.delete(project);
+    }
+
 
 }

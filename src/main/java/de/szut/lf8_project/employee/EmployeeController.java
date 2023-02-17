@@ -63,9 +63,9 @@ public class EmployeeController {
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "resource not found",
                     content = @Content)})
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void deleteEmployeeById(@RequestParam long id) {
+    public void deleteEmployeeById(@RequestParam Long id) {
         var entity = this.service.readById(id);
         if (entity == null) {
             throw new ResourceNotFoundException("EmployeeEntity not found on id = " + id);

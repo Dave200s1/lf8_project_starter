@@ -1,6 +1,7 @@
 package de.szut.lf8_project.project;
 
 import de.szut.lf8_project.employee.EmployeeGetDto;
+import de.szut.lf8_project.exceptionHandling.ResourceNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -11,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/project")
@@ -32,7 +35,7 @@ public class ProjectController {
                     content = @Content),
             @ApiResponse(responseCode = "401", description = "not authorized",
                     content = @Content)})
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<ProjectGetDto> createProject(@Valid @RequestBody final ProjectCreateDto dto){
         ProjectEntity newProject = this.projectMapper.mapProjectCreateDtoToProject(dto);
         newProject =  this.service.create(newProject);
@@ -42,7 +45,23 @@ public class ProjectController {
 
     @Operation(summary = "delivers a list of projects")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "list of employees",
+            @ApiResponse(responseCode = "200", description = "list of projects",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = EmployeeGetDto.class))}),
+            @ApiResponse(responseCode = "401", description = "not authorized",
+                    content = @Content)})
+    @GetMapping
+    public List<ProjectGetDto> findAll() {
+        return this.service
+                .readAll()
+                .stream()
+                .map(e -> this.projectMapper.mapProjectToGetProjectDto(e))
+                .collect(Collectors.toList());
+    }
+
+    @Operation(summary = "delivers project by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "project requested successful",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = EmployeeGetDto.class))}),
             @ApiResponse(responseCode = "401", description = "not authorized",
@@ -61,7 +80,7 @@ public class ProjectController {
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "resource not found",
                     content = @Content)})
-    @PutMapping("/{id}/update")
+    @PutMapping("/{id}")
     public ResponseEntity<ProjectGetDto> updateProject(@PathVariable final Long id, @Valid @RequestBody final ProjectCreateDto dto) {
         ProjectEntity updatedProject = this.projectMapper.mapProjectCreateDtoToProject(dto);
         updatedProject.setPid(id);
@@ -70,5 +89,20 @@ public class ProjectController {
         return new ResponseEntity<>(request,HttpStatus.OK);
     }
 
-
+    @Operation(summary = "deletes a project by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "delete successful"),
+            @ApiResponse(responseCode = "401", description = "not authorized",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "resource not found",
+                    content = @Content)})
+    @DeleteMapping("/{id}")
+    public void deleteProjectById(@RequestParam Long id) {
+        var entity = this.service.readById(id);
+        if (entity == null) {
+            throw new ResourceNotFoundException("Project not found on id = " + id);
+        } else {
+            this.service.delete(entity);
+        }
+    }
 }
